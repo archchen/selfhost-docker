@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    networks: 
+      - wordpress
+    environment:
+      WORDPRESS_DB_PASSWORD: Ocserv998
+      VIRTUAL_HOST: www.aoinv.com
+      LETSENCRYPT_HOST: www.aoinv.com
+      LETSENCRYPT_EMAIL: arch@aoinv.com      
+
+  mysql:
+    image: mysql
+    restart: always
+    networks: 
+      - wordpress
+    environment:
+      MYSQL_ROOT_PASSWORD: Ocserv998
+networks:
+  wordpress:
+    external: true
