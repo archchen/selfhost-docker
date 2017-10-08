@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  db:
+    image: mariadb:10.1
+    networks:
+      - v
+    environment:
+      MYSQL_ROOT_PASSWORD: filerun
+      MYSQL_USER: filerun
+      MYSQL_PASSWORD: filerun
+      MYSQL_DATABASE: filerun
+    volumes:
+      - /filerun/db:/var/lib/mysql
+
+  web:
+    depends_on:
+      - db
+    links:
+      - db
+    image: afian/filerun
+    networks: 
+      - v
+    environment:
+      VIRTUAL_HOST: v.aoinv.com
+      LETSENCRYPT_HOST: v.aoinv.com
+      LETSENCRYPT_EMAIL: arch@aoinv.com
+    volumes:
+      - /filerun/html:/var/www/html
+      - /var/download:/user-files
+networks:
+  v:
+    external: true
